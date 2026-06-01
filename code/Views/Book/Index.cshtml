@@ -1,0 +1,50 @@
+﻿@model List<Bai6_Validation.Models.Book>
+
+@{
+    ViewData["Title"] = "Danh sách sách";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Thêm sách mới</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tên sách</th>
+            <th>Giá</th>
+            <th>Tác giả</th>
+            <th>Nhà xuất bản</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Ten</td>
+                    <td>@book.Gia.ToString("N0") VNĐ</td>
+                    <td>@(string.IsNullOrEmpty(book.TacGia) ? "Chưa cập nhật" : book.TacGia)</td>
+                    <td>@(string.IsNullOrEmpty(book.NhaXuatBan) ? "Chưa cập nhật" : book.NhaXuatBan)</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center">Chưa có sách nào</td>
+            </tr>
+        }
+    </tbody>
+</table>
